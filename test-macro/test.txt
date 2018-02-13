@@ -1,0 +1,1 @@
+{"id":1,"person":{"age":21,"name":"liubo","weight":65.7f,"sex":1,"empty":{}},"persons":[{"age":21,"name":"liubo","weight":65.7f,"sex":1,"empty":{}}]}

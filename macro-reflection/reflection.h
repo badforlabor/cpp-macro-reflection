@@ -6,6 +6,14 @@
 #ifndef Member
 #define Member(memberType, memberName) memberType memberName
 #endif
+#ifndef VectorMember
+#define VectorMember(memberType, memberName) std::vector<memberType> memberName
+#endif
+
+
+STRUCT(EmptyStruct)
+{
+};
 
 STRUCT(Person)
 {
@@ -13,4 +21,12 @@ STRUCT(Person)
 	Member(std::string, name);
 	Member(float, weight);
 	Member(int, sex);
+	Member(EmptyStruct, empty);
+};
+
+STRUCT(Company)
+{
+	Member(int, id);
+	Member(Person, person);
+	VectorMember(Person, persons);
 };
