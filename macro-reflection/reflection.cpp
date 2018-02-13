@@ -4,8 +4,6 @@
 
 #define EXPAND_MACRO 0
 #if EXPAND_MACRO
-struct Person;
-//template<typename T> void Serialize(T& ar, Person& obj) { ar.Serialize(obj); }
 struct Person
 {
 	int age;
