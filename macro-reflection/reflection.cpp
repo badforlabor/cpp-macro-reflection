@@ -20,15 +20,46 @@ template<typename T> void SerializeStruct(T& ar, Person& obj)
 	ar.SerializeField("sex", obj.sex);
 }
 #else
+
+struct FakeReflection 
+{
+	typedef FakeReflection DefaultType;
+};
+
+template<class T>
+struct isfake : std::false_type
+{
+
+};
+template<> struct isfake<std::string> : std::true_type
+{};
+template<> struct isfake<FakeReflection> : std::true_type
+{};
+
+template<typename T>
+struct isfake2 : isfake<T::DefaultType>
+{
+
+};
+template<> struct isfake2<std::string> : std::true_type
+{};
+template<> struct isfake2<int> : std::true_type
+{};
+template<> struct isfake2<float> : std::true_type
+{};
+
+// todo. 加上类型萃取，确保memberType的类型为POD，std::string，和自己定义的结构体。
 #include "reflection.h"
 #undef STRUCT
 #undef Member
 #undef VectorMember
 #define STRUCT(clsName) template<class T> void SerializeStruct(clsName& obj, T& ar)
-#define Member(memberType, memberName) ar.SerializeField<memberType>(#memberName, obj.##memberName);
+#define Member(memberType, memberName) static_assert(isfake2<memberType>::value, "1"); \
+ar.SerializeField<memberType>(#memberName, obj.##memberName);
 #define VectorMember(memberType, memberName) ar.SerializeArrayField<memberType>(#memberName, obj.##memberName);
 #include "reflection.h"
 #endif
+
 
 class JsonArchive
 {
@@ -36,6 +67,9 @@ public:
 	template<class T>
 	void SerializeField(const char* FieldName, T& Field)
 	{
+		static_assert(isfake<std::string>::value || std::is_pod<int>::value, "1");
+		static_assert(isfake<Person>::value, "1");
+
 		ss << "\"" << FieldName << "\":";// << Field << ",";
 		Serialize<T>(Field);
 		ss << ",";
@@ -105,6 +139,9 @@ private:
 
 int main()
 {
+	extern int main1();
+	main1();
+
 	Person p;
 	p.name = "liubo";
 	p.age = 21;

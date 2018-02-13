@@ -145,6 +145,7 @@
     <ClInclude Include="reflection.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="binary.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="reflection.cpp" />
   </ItemGroup>

@@ -1,7 +1,6 @@
 
-
 #ifndef STRUCT
-#define STRUCT(clsName) struct clsName
+#define STRUCT(clsName) struct clsName : FakeReflection
 #endif
 #ifndef Member
 #define Member(memberType, memberName) memberType memberName
@@ -9,6 +8,7 @@
 #ifndef VectorMember
 #define VectorMember(memberType, memberName) std::vector<memberType> memberName
 #endif
+
 
 
 STRUCT(EmptyStruct)
