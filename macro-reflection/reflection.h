@@ -1,6 +1,6 @@
 
 #ifndef STRUCT
-#define STRUCT(clsName) struct clsName : FakeReflection
+#define STRUCT(clsName) struct clsName
 #endif
 #ifndef Member
 #define Member(memberType, memberName) memberType memberName

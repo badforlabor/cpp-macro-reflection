@@ -21,11 +21,6 @@ template<typename T> void SerializeStruct(T& ar, Person& obj)
 }
 #else
 
-struct FakeReflection 
-{
-	typedef FakeReflection DefaultType;
-};
-
 template<class T>
 struct isfake : std::false_type
 {
@@ -33,19 +28,9 @@ struct isfake : std::false_type
 };
 template<> struct isfake<std::string> : std::true_type
 {};
-template<> struct isfake<FakeReflection> : std::true_type
+template<> struct isfake<int> : std::true_type
 {};
-
-template<typename T>
-struct isfake2 : isfake<T::DefaultType>
-{
-
-};
-template<> struct isfake2<std::string> : std::true_type
-{};
-template<> struct isfake2<int> : std::true_type
-{};
-template<> struct isfake2<float> : std::true_type
+template<> struct isfake<float> : std::true_type
 {};
 
 // todo. 加上类型萃取，确保memberType的类型为POD，std::string，和自己定义的结构体。
@@ -53,8 +38,8 @@ template<> struct isfake2<float> : std::true_type
 #undef STRUCT
 #undef Member
 #undef VectorMember
-#define STRUCT(clsName) template<class T> void SerializeStruct(clsName& obj, T& ar)
-#define Member(memberType, memberName) static_assert(isfake2<memberType>::value, "1"); \
+#define STRUCT(clsName) template<> struct isfake<clsName> : std::true_type {}; template<class T> void SerializeStruct(clsName& obj, T& ar)
+#define Member(memberType, memberName) static_assert(isfake<memberType>::value, "1"); \
 ar.SerializeField<memberType>(#memberName, obj.##memberName);
 #define VectorMember(memberType, memberName) ar.SerializeArrayField<memberType>(#memberName, obj.##memberName);
 #include "reflection.h"
@@ -101,9 +86,9 @@ public:
 	void Serialize(T& obj)
 	{
 		ss << "{";
-		int oldpos = ss.tellp();
+		int oldpos = (int)ss.tellp();
 		SerializeStruct(obj, *this);
-		int pos = ss.tellp();
+		int pos = (int)ss.tellp();
 		if (pos > oldpos)
 		{
 			// 去掉最后的","
@@ -137,11 +122,8 @@ private:
 };
 
 
-int main()
+int main2()
 {
-	extern int main1();
-	main1();
-
 	Person p;
 	p.name = "liubo";
 	p.age = 21;
