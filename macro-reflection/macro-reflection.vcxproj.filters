@@ -15,18 +15,27 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="reflection.h">
+    <ClInclude Include="my_struct.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="myheader.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="macro_reflection.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="reflection.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="binary.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="json.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="macro_reflection.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

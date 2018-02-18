@@ -3,15 +3,7 @@
 #include <vector>
 #include <cassert>
 
-struct FakeReflection {};
-#include "reflection.h"
-#undef STRUCT
-#undef Member
-#undef VectorMember
-#define STRUCT(clsName) template<class T> void SerializeStruct(clsName& obj, T& ar)
-#define Member(memberType, memberName) ar.SerializeField<memberType>(#memberName, obj.##memberName);
-#define VectorMember(memberType, memberName) ar.SerializeArrayField<memberType>(#memberName, obj.##memberName);
-#include "reflection.h"
+#include "myheader.h"
 
 class BinaryStream
 {

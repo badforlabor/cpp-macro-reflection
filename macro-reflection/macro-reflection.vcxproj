@@ -142,12 +142,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="reflection.h" />
+    <ClInclude Include="myheader.h" />
+    <ClInclude Include="my_struct.h" />
+    <ClInclude Include="macro_reflection.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="binary.cpp" />
+    <ClCompile Include="json.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="reflection.cpp" />
+    <ClCompile Include="macro_reflection.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

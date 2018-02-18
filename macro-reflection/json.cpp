@@ -1,50 +1,7 @@
 ﻿#include <sstream>
 #include <iostream>
 #include <vector>
-
-#define EXPAND_MACRO 0
-#if EXPAND_MACRO
-struct Person
-{
-	int age;
-	std::string name;
-	float weight;
-	unsigned char sex;
-};
-
-template<typename T> void SerializeStruct(T& ar, Person& obj)
-{
-	ar.SerializeField("age", obj.age);
-	ar.SerializeField("name", obj.name);
-	ar.SerializeField("weight", obj.weight);
-	ar.SerializeField("sex", obj.sex);
-}
-#else
-
-template<class T>
-struct isfake : std::false_type
-{
-
-};
-template<> struct isfake<std::string> : std::true_type
-{};
-template<> struct isfake<int> : std::true_type
-{};
-template<> struct isfake<float> : std::true_type
-{};
-
-// todo. 加上类型萃取，确保memberType的类型为POD，std::string，和自己定义的结构体。
-#include "reflection.h"
-#undef STRUCT
-#undef Member
-#undef VectorMember
-#define STRUCT(clsName) template<> struct isfake<clsName> : std::true_type {}; template<class T> void SerializeStruct(clsName& obj, T& ar)
-#define Member(memberType, memberName) static_assert(isfake<memberType>::value, "1"); \
-ar.SerializeField<memberType>(#memberName, obj.##memberName);
-#define VectorMember(memberType, memberName) ar.SerializeArrayField<memberType>(#memberName, obj.##memberName);
-#include "reflection.h"
-#endif
-
+#include "myheader.h"
 
 class JsonArchive
 {
@@ -70,9 +27,9 @@ public:
 	void SerializeArray(std::vector<T>& obj)
 	{
 		ss << "[";
-		for(size_t i=0; i<obj.size(); i++)
+		for (size_t i = 0; i < obj.size(); i++)
 		{
-			if (i > 0) 
+			if (i > 0)
 			{
 				ss << ",";
 			}

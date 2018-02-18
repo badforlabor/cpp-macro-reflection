@@ -1,15 +1,4 @@
 
-#ifndef STRUCT
-#define STRUCT(clsName) struct clsName
-#endif
-#ifndef Member
-#define Member(memberType, memberName) memberType memberName
-#endif
-#ifndef VectorMember
-#define VectorMember(memberType, memberName) std::vector<memberType> memberName
-#endif
-
-
 
 STRUCT(EmptyStruct)
 {
