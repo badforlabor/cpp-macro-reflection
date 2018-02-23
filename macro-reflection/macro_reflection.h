@@ -29,6 +29,8 @@ template<> struct isfake<int> : std::true_type
 {};
 template<> struct isfake<float> : std::true_type
 {};
+template<> struct isfake<ByteArray> : std::true_type
+{};
 
 #undef STRUCT
 #undef Member

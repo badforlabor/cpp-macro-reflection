@@ -145,6 +145,7 @@
     <ClInclude Include="myheader.h" />
     <ClInclude Include="my_struct.h" />
     <ClInclude Include="macro_reflection.h" />
+    <ClInclude Include="raw.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="binary.cpp" />

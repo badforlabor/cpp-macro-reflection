@@ -17,5 +17,6 @@ STRUCT(Company)
 {
 	Member(int, id);
 	Member(Person, person);
+	Member(ByteArray, raw);
 	VectorMember(Person, persons);
 };

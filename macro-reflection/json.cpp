@@ -65,6 +65,10 @@ public:
 	{
 		ss << "\"" << obj << "\"";
 	}
+	template<> void Serialize<ByteArray>(ByteArray& obj)
+	{
+		
+	}
 	template<> void Serialize<unsigned char>(unsigned char& obj)
 	{
 		ss << (int)obj;

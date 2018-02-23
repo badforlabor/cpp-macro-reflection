@@ -24,6 +24,9 @@
     <ClInclude Include="macro_reflection.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="raw.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

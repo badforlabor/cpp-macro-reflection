@@ -14,7 +14,7 @@ public:
 		readpos = 0;
 	}
 
-	void CopyData(const std::vector<char>& data)
+	void CopyData(const std::vector<unsigned char>& data)
 	{
 		buffer = data;
 	}
@@ -45,6 +45,17 @@ public:
 		return *this;
 	}
 
+	template<>
+	BinaryStream& operator<<(ByteArray& t)
+	{
+		size_t size = t.size();
+		(*this) << size;
+		assert(size <= 1024 * 1024 * 1024);
+		buffer.insert(buffer.end(), t.begin(), t.end());
+		pos += size;
+		return *this;
+	}
+
 	template<class T>
 	BinaryStream& operator>>(T& t)
 	{
@@ -65,6 +76,19 @@ public:
 		readpos += size;
 		return *this;
 	}
+	template<>
+	BinaryStream& operator >> (ByteArray& t)
+	{
+		size_t size = 0;
+		(*this) >> size;
+
+		assert(readpos + size <= buffer.size());
+		
+		t.insert(t.begin(), buffer.begin() + readpos, buffer.begin() + readpos + size);
+		readpos += size;
+		return *this;
+	}
+
 
 	// 通用序列化
 	template<class T>
@@ -89,7 +113,7 @@ public:
 	}
 
 private:
-	std::vector<char> buffer;
+	std::vector<unsigned char> buffer;
 	int pos;
 	int readpos;
 };
@@ -173,6 +197,10 @@ public:
 	{
 		ss.AutoSerialize(read, obj);
 	}
+	template<> void Serialize<ByteArray>(ByteArray& obj)
+	{
+		ss.AutoSerialize(read, obj);
+	}
 
 	void Dump()
 	{
@@ -209,6 +237,7 @@ int main1()
 
 	Company c;
 	c.id = 1;
+	c.raw.insert(c.raw.begin(), 10, 1);
 	c.person = p;
 	c.persons.push_back(p);
 	{

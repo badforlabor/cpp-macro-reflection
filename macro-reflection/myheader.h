@@ -9,6 +9,7 @@
 #include <sstream>
 #include <iostream>
 #include <vector>
+#include "raw.h"
 
 #undef MACRO_IMPLE
 #include "macro_reflection.h"
