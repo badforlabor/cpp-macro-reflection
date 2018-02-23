@@ -142,10 +142,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="binary.h" />
+    <ClInclude Include="json.h" />
     <ClInclude Include="myheader.h" />
     <ClInclude Include="my_struct.h" />
     <ClInclude Include="macro_reflection.h" />
-    <ClInclude Include="raw.h" />
+    <ClInclude Include="inside_type.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="binary.cpp" />

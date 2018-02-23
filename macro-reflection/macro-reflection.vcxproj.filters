@@ -24,7 +24,13 @@
     <ClInclude Include="macro_reflection.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="raw.h">
+    <ClInclude Include="binary.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="json.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inside_type.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
