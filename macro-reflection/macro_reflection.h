@@ -4,15 +4,13 @@
 /************************************************************************/
 /* 声明结构体                                                           */
 /************************************************************************/
-#ifndef STRUCT
+#undef STRUCT
+#undef Member
+#undef VectorMember
 #define STRUCT(clsName) struct clsName
-#endif
-#ifndef Member
 #define Member(memberType, memberName) memberType memberName
-#endif
-#ifndef VectorMember
 #define VectorMember(memberType, memberName) std::vector<memberType> memberName
-#endif
+
 
 #else
 /************************************************************************/
@@ -22,12 +20,12 @@
 #undef STRUCT
 #undef Member
 #undef VectorMember
-#define STRUCT(clsName) template<> struct isfake<clsName> : std::true_type {}; \
+#define STRUCT(clsName) template <> struct isfake<clsName> : std::true_type {}; \
 template<class T> void SerializeStruct(clsName& obj, T& ar)
-#define Member(memberType, memberName) static_assert(isfake<memberType>::value, "1"); \
-		ar.SerializeField<memberType>(#memberName, obj.##memberName);
-#define VectorMember(memberType, memberName) ar.SerializeArrayField<memberType>(#memberName, obj.##memberName);
-
+#define Member(memberType,memberName) static_assert(isfake<memberType>::value, "1"); \
+ar.template SerializeField<memberType>(#memberName, obj.memberName);
+#define VectorMember(memberType,memberName) static_assert(isfake<memberType>::value, "1");\
+ar.template SerializeArrayField<memberType>(#memberName, obj.memberName);
 
 #endif
 

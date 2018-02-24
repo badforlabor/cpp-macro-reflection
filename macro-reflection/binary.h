@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <cassert>
+#include "inside_type.h"
 
 class BinaryStream
 {
@@ -29,6 +30,10 @@ public:
 	{
 		return buffer.size();
 	}
+	void Resize(size_t size)
+	{
+		buffer.resize(size);
+	}
 
 	template<class T>
 	BinaryStream& operator<<(T& t)
@@ -41,27 +46,6 @@ public:
 		pos += size;
 		return *this;
 	}
-	template<>
-	BinaryStream& operator<<(std::string& t)
-	{
-		size_t size = t.size();
-		(*this) << size;
-		assert(size <= 1024 * 1024 * 1024);
-		buffer.insert(buffer.end(), t.begin(), t.end());
-		pos += size;
-		return *this;
-	}
-
-	template<>
-	BinaryStream& operator<<(ByteArray& t)
-	{
-		size_t size = t.size();
-		(*this) << size;
-		assert(size <= 1024 * 1024 * 1024);
-		buffer.insert(buffer.end(), t.begin(), t.end());
-		pos += size;
-		return *this;
-	}
 
 	template<class T>
 	BinaryStream& operator >> (T& t)
@@ -69,29 +53,6 @@ public:
 		static_assert(std::is_pod<T>::value, "must be pod");
 		int size = sizeof(T);
 		t = *(T*)(buffer.data() + readpos);
-		readpos += size;
-		return *this;
-	}
-	template<>
-	BinaryStream& operator >> (std::string& t)
-	{
-		size_t size = 0;
-		(*this) >> size;
-
-		assert(readpos + size <= buffer.size());
-		t.append(buffer.begin() + readpos, buffer.begin() + readpos + size);
-		readpos += size;
-		return *this;
-	}
-	template<>
-	BinaryStream& operator >> (ByteArray& t)
-	{
-		size_t size = 0;
-		(*this) >> size;
-
-		assert(readpos + size <= buffer.size());
-
-		t.insert(t.begin(), buffer.begin() + readpos, buffer.begin() + readpos + size);
 		readpos += size;
 		return *this;
 	}
@@ -110,6 +71,7 @@ public:
 			return (*this) << t;
 		}
 	}
+#if 0
 	// 通用序列化
 	template<class T>
 	BinaryStream& AutoSerialize(bool read, std::vector<T>& t)
@@ -118,13 +80,13 @@ public:
 		static_assert(false, "failed");
 		return *this;
 	}
+#endif
 
 private:
 	std::vector<unsigned char> buffer;
 	int pos;
 	int readpos;
 };
-
 
 class BinaryArchive
 {
@@ -167,48 +129,7 @@ public:
 	{
 		SerializeStruct(obj, *this);
 	}
-
-	template<> void Serialize<unsigned int>(unsigned int& obj)
-	{
-		ss.AutoSerialize(read, obj);
-	}
-	template<> void Serialize<int>(int& obj)
-	{
-		ss.AutoSerialize(read, obj);
-	}
-	template<> void Serialize<Int64>(Int64& obj)
-	{
-		ss.AutoSerialize(read, obj);
-	}
-	template<> void Serialize<long>(long& obj)
-	{
-		ss.AutoSerialize(read, obj);
-	}
-	template<> void Serialize<float>(float& obj)
-	{
-		ss.AutoSerialize(read, obj);
-	}
-	template<> void Serialize<double>(double& obj)
-	{
-		ss.AutoSerialize(read, obj);
-	}
-	template<> void Serialize<unsigned char>(unsigned char& obj)
-	{
-		ss.AutoSerialize(read, obj);
-	}
-	template<> void Serialize<char>(char& obj)
-	{
-		ss.AutoSerialize(read, obj);
-	}
-	template<> void Serialize<std::string>(std::string& obj)
-	{
-		ss.AutoSerialize(read, obj);
-	}
-	template<> void Serialize<ByteArray>(ByteArray& obj)
-	{
-		ss.AutoSerialize(read, obj);
-	}
-
+	
 	void Dump()
 	{
 
@@ -227,3 +148,22 @@ public:
 	BinaryStream ss;
 	bool read;
 };
+
+
+template<> BinaryStream& BinaryStream::operator<<(std::string& t);
+template<> BinaryStream& BinaryStream::operator<<(ByteArray& t);
+template<> BinaryStream& BinaryStream::operator >> (std::string& t);
+template<> BinaryStream& BinaryStream::operator >> (ByteArray& t);
+
+
+template<> void BinaryArchive::Serialize<unsigned int>(unsigned int& obj);
+template<> void BinaryArchive::Serialize<int>(int& obj);
+template<> void BinaryArchive::Serialize<Int64>(Int64& obj);
+template<> void BinaryArchive::Serialize<long>(long& obj);
+template<> void BinaryArchive::Serialize<float>(float& obj);
+template<> void BinaryArchive::Serialize<double>(double& obj);
+template<> void BinaryArchive::Serialize<unsigned char>(unsigned char& obj);
+template<> void BinaryArchive::Serialize<char>(char& obj);
+template<> void BinaryArchive::Serialize<std::string>(std::string& obj);
+template<> void BinaryArchive::Serialize<ByteArray>(ByteArray& obj);
+

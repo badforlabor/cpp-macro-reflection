@@ -50,30 +50,6 @@ public:
 		}
 		ss << "}";
 	}
-	template<> void Serialize<int>(int& obj)
-	{
-		ss << obj;
-	}
-	template<> void Serialize<Int64>(Int64& obj)
-	{
-		ss << obj;
-	}
-	template<> void Serialize<float>(float& obj)
-	{
-		ss << obj << "f";
-	}
-	template<> void Serialize<std::string>(std::string& obj)
-	{
-		ss << "\"" << obj << "\"";
-	}
-	template<> void Serialize<ByteArray>(ByteArray& obj)
-	{
-
-	}
-	template<> void Serialize<unsigned char>(unsigned char& obj)
-	{
-		ss << (int)obj;
-	}
 
 	void Dump()
 	{
@@ -82,4 +58,5 @@ public:
 private:
 	std::stringstream ss;
 };
+
 

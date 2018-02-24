@@ -4,6 +4,7 @@ STRUCT(EmptyStruct)
 {
 };
 
+
 STRUCT(Person)
 {
 	Member(int, age);

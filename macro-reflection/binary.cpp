@@ -7,6 +7,100 @@
 #include "binary.h"
 
 
+
+
+template<> BinaryStream& BinaryStream::operator<<(std::string& t)
+{
+	size_t size = t.size();
+	(*this) << size;
+	assert(size <= 1024 * 1024 * 1024);
+	buffer.insert(buffer.end(), t.begin(), t.end());
+	pos += size;
+	return *this;
+}
+
+template<> BinaryStream& BinaryStream::operator<<(ByteArray& t)
+{
+	size_t size = t.size();
+	(*this) << size;
+	assert(size <= 1024 * 1024 * 1024);
+	buffer.insert(buffer.end(), t.begin(), t.end());
+	pos += size;
+	return *this;
+}
+
+template<> BinaryStream& BinaryStream::operator >> (std::string& t)
+{
+	size_t size = 0;
+	(*this) >> size;
+
+	assert(readpos + size <= buffer.size());
+	t.append(buffer.begin() + readpos, buffer.begin() + readpos + size);
+	readpos += size;
+	return *this;
+}
+template<> BinaryStream& BinaryStream::operator >> (ByteArray& t)
+{
+	size_t size = 0;
+	(*this) >> size;
+
+	assert(readpos + size <= buffer.size());
+
+	t.insert(t.begin(), buffer.begin() + readpos, buffer.begin() + readpos + size);
+	readpos += size;
+	return *this;
+}
+
+
+template<> void BinaryArchive::Serialize<unsigned int>(unsigned int& obj)
+{
+	ss.AutoSerialize(read, obj);
+}
+template<> void BinaryArchive::Serialize<int>(int& obj)
+{
+	ss.AutoSerialize(read, obj);
+}
+template<> void BinaryArchive::Serialize<Int64>(Int64& obj)
+{
+	ss.AutoSerialize(read, obj);
+}
+template<> void BinaryArchive::Serialize<long>(long& obj)
+{
+	ss.AutoSerialize(read, obj);
+}
+template<> void BinaryArchive::Serialize<float>(float& obj)
+{
+	ss.AutoSerialize(read, obj);
+}
+template<> void BinaryArchive::Serialize<double>(double& obj)
+{
+	ss.AutoSerialize(read, obj);
+}
+template<> void BinaryArchive::Serialize<unsigned char>(unsigned char& obj)
+{
+	ss.AutoSerialize(read, obj);
+}
+template<> void BinaryArchive::Serialize<char>(char& obj)
+{
+	ss.AutoSerialize(read, obj);
+}
+template<> void BinaryArchive::Serialize<std::string>(std::string& obj)
+{
+	ss.AutoSerialize(read, obj);
+}
+template<> void BinaryArchive::Serialize<ByteArray>(ByteArray& obj)
+{
+	ss.AutoSerialize(read, obj);
+}
+
+
+
+
+
+
+
+
+
 int main1()
 {
 	Person p;

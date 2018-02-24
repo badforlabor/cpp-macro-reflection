@@ -4,6 +4,32 @@
 #include "myheader.h"
 #include "json.h"
 
+
+template<> void JsonArchive::Serialize<int>(int& obj)
+{
+	ss << obj;
+}
+template<> void JsonArchive::Serialize<Int64>(Int64& obj)
+{
+	ss << obj;
+}
+template<> void JsonArchive::Serialize<float>(float& obj)
+{
+	ss << obj << "f";
+}
+template<> void JsonArchive::Serialize<std::string>(std::string& obj)
+{
+	ss << "\"" << obj << "\"";
+}
+template<> void JsonArchive::Serialize<ByteArray>(ByteArray& obj)
+{
+
+}
+template<> void JsonArchive::Serialize<unsigned char>(unsigned char& obj)
+{
+	ss << (int)obj;
+}
+
 int main2()
 {
 	Person p;

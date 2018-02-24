@@ -11,6 +11,8 @@
 #include <vector>
 #include "inside_type.h"
 
+#include "binary.h"
+
 #undef MACRO_IMPLE
 #include "macro_reflection.h"
 #include "my_struct.h"
