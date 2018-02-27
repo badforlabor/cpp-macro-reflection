@@ -1,6 +1,8 @@
 ﻿#pragma once
 #include <sstream>
 #include <iostream>
+#include <cstdint>
+#include <cstring>
 #include <vector>
 #include <cassert>
 #include "inside_type.h"
@@ -47,11 +49,29 @@ public:
 		return *this;
 	}
 
+	// 读取数据之前检查一下，如果数据内容大小不对，那么强制认定为读取完毕了。防止数据被污染！
+	bool CheckReadSize(int size)
+	{
+		assert(readpos + size <= buffer.size());
+		if (readpos + size > buffer.size())
+		{
+			readpos = buffer.size();
+			return false;
+		}
+		return true;
+	}
+
 	template<class T>
 	BinaryStream& operator >> (T& t)
 	{
 		static_assert(std::is_pod<T>::value, "must be pod");
 		int size = sizeof(T);
+		
+		if (!CheckReadSize(size))
+		{
+			return *this;
+		}
+
 		t = *(T*)(buffer.data() + readpos);
 		readpos += size;
 		return *this;
@@ -156,6 +176,7 @@ template<> BinaryStream& BinaryStream::operator >> (std::string& t);
 template<> BinaryStream& BinaryStream::operator >> (ByteArray& t);
 
 
+template<> void BinaryArchive::Serialize<unsigned long int>(unsigned long int& obj);
 template<> void BinaryArchive::Serialize<unsigned int>(unsigned int& obj);
 template<> void BinaryArchive::Serialize<int>(int& obj);
 template<> void BinaryArchive::Serialize<Int64>(Int64& obj);

@@ -34,7 +34,11 @@ template<> BinaryStream& BinaryStream::operator >> (std::string& t)
 	size_t size = 0;
 	(*this) >> size;
 
-	assert(readpos + size <= buffer.size());
+	if (!CheckReadSize(size))
+	{
+		return *this;
+	}
+
 	t.append(buffer.begin() + readpos, buffer.begin() + readpos + size);
 	readpos += size;
 	return *this;
@@ -44,7 +48,10 @@ template<> BinaryStream& BinaryStream::operator >> (ByteArray& t)
 	size_t size = 0;
 	(*this) >> size;
 
-	assert(readpos + size <= buffer.size());
+	if (!CheckReadSize(size))
+	{
+		return *this;
+	}
 
 	t.insert(t.begin(), buffer.begin() + readpos, buffer.begin() + readpos + size);
 	readpos += size;
@@ -52,6 +59,10 @@ template<> BinaryStream& BinaryStream::operator >> (ByteArray& t)
 }
 
 
+template<> void BinaryArchive::Serialize<unsigned long int>(unsigned long int& obj)
+{
+	ss.AutoSerialize(read, obj);
+}
 template<> void BinaryArchive::Serialize<unsigned int>(unsigned int& obj)
 {
 	ss.AutoSerialize(read, obj);
