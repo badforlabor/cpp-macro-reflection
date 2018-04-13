@@ -1,12 +1,13 @@
 ﻿#pragma once
 #include <vector>
+#include <memory>
 
 class ByteArray : public std::vector<unsigned char>
 {
 public:
 	ByteArray() {}
 
-	void SetData(std::istream* stm)
+	void SetData(std::shared_ptr<std::istream> stm)
 	{
 		stm->seekg(0, std::ios_base::end);
 		int data_len = (int)(stm->tellg());
@@ -28,9 +29,9 @@ public:
 	{
 		return (void*)GetPtr();
 	}
-	size_t GetSize()
+	int GetSize()
 	{
-		return size();
+		return (int)size();
 	}
 };
 
@@ -57,3 +58,11 @@ template<> struct isfake<float> : std::true_type
 {};
 template<> struct isfake<ByteArray> : std::true_type
 {};
+
+
+extern void MacroZero(int& v);
+extern void MacroZero(float& v);
+extern void MacroZero(bool& v);
+extern void MacroZero(Int64& v);
+extern void MacroZero(ByteArray& v);
+extern void MacroZero(std::string& v);

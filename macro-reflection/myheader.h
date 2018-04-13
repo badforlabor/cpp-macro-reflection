@@ -14,9 +14,16 @@
 #include "binary.h"
 
 #undef MACRO_IMPLE
+#undef MACRO_ZERO 
 #include "macro_reflection.h"
 #include "my_struct.h"
 
 #define MACRO_IMPLE
+#undef MACRO_ZERO
+#include "macro_reflection.h"
+#include "my_struct.h"
+
+#define MACRO_IMPLE
+#define MACRO_ZERO
 #include "macro_reflection.h"
 #include "my_struct.h"

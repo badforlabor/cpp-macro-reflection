@@ -15,10 +15,17 @@
 
 #pragma message("undefine MACRO_IMPLE")
 #undef MACRO_IMPLE
+#undef MACRO_ZERO 
 #include "macro_reflection.h"
 #include "db2gs_protocol.h"
 
 #pragma message("define MACRO_IMPLE")
 #define MACRO_IMPLE
+#undef MACRO_ZERO 
+#include "macro_reflection.h"
+#include "db2gs_protocol.h"
+
+#define MACRO_IMPLE
+#define MACRO_ZERO
 #include "macro_reflection.h"
 #include "db2gs_protocol.h"
