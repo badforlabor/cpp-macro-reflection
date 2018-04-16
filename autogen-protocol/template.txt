@@ -1,0 +1,24 @@
+﻿/*
+	这个是自动生成的，不要手动修改
+*/
+
+#foreach($one in $AllCls)
+
+// $one.Name
+class $one.Name
+{
+public:	
+	$util.ConstructInfo($one)
+
+#foreach($f in $one.Fields)
+	$util.TypeString($f) $f.Name;
+#end
+};
+template<class T> void SerializeStruct($one.Name& obj, T& ar, bool& b)
+{
+#foreach($f in $one.Fields)
+	ar.template SerializeField<$util.TypeString($f)>("$f.Name", obj.$f.Name, b); 
+	if(!b) return;
+#end
+}
+#end
