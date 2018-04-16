@@ -21,6 +21,12 @@ namespace autogen_protocol
 
     class TypeUtil
     {
+        public bool IsArray(FieldInfo f)
+        {
+            if (f.FieldType.GetInterface(typeof(System.Collections.IList).Name) != null)
+                return true;
+            return false;
+        }
         public string TypeString(FieldInfo f)
         {
             if (f.FieldType.GetInterface(typeof(System.Collections.IList).Name) != null)
@@ -153,7 +159,8 @@ namespace autogen_protocol
             }
             GenerateCode(AllCls);
         }
-        public static void GenerateCode(List<ClassInfo> AllCls)
+
+        public static void CommonGenerateCode(List<ClassInfo> AllCls, string TemplateFileName, string OutputFile)
         {
             var util = new TypeUtil();
             util.dict = new Dictionary<string, string>();
@@ -180,12 +187,17 @@ namespace autogen_protocol
 
             StringWriter sw = new StringWriter();
             // 注意cls.Name必须是属性，而不是普通的成员变量，要不会无效！
-            string vt = File.ReadAllText("../../template.txt");
-            ve.Evaluate(vc, sw, "eval1", vt);
-            
+            string vt = File.ReadAllText(TemplateFileName);
+            ve.Evaluate(vc, sw, "gen-src-tag", vt);
+
             Console.WriteLine(sw.GetStringBuilder().ToString());
 
-            File.WriteAllText("../../auto.h", sw.GetStringBuilder().ToString());
+            File.WriteAllText(OutputFile, sw.GetStringBuilder().ToString());
+        }
+        public static void GenerateCode(List<ClassInfo> AllCls)
+        {
+            CommonGenerateCode(AllCls, "../../vt-struct.txt", "../../auto_c2gs_protol_struct.h");
+            CommonGenerateCode(AllCls, "../../vt-functions.txt", "../../auto_c2gs_protol_function.h");
         }
     }
 }

@@ -1,0 +1,18 @@
+﻿/*
+	这个是自动生成的，不要手动修改
+*/
+#pragma once
+
+#foreach($one in $AllCls)
+
+// $one.Name
+class $one.Name
+{
+public:	
+	$util.ConstructInfo($one)
+
+#foreach($f in $one.Fields)
+	$util.TypeString($f) $f.Name;
+#end
+};
+#end
