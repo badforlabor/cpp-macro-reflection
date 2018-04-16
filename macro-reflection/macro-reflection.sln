@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "macro-reflection", "macro-r
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "test-macro", "..\test-macro\test-macro.csproj", "{B7D2C42C-EEE5-4D03-A492-EB431EE6560E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "autogen-protocol", "..\autogen-protocol\autogen-protocol.csproj", "{0726DCEE-D736-4C01-A042-1B42C7D0127B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,18 @@ Global
 		{B7D2C42C-EEE5-4D03-A492-EB431EE6560E}.Release|x64.Build.0 = Release|Any CPU
 		{B7D2C42C-EEE5-4D03-A492-EB431EE6560E}.Release|x86.ActiveCfg = Release|Any CPU
 		{B7D2C42C-EEE5-4D03-A492-EB431EE6560E}.Release|x86.Build.0 = Release|Any CPU
+		{0726DCEE-D736-4C01-A042-1B42C7D0127B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0726DCEE-D736-4C01-A042-1B42C7D0127B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0726DCEE-D736-4C01-A042-1B42C7D0127B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0726DCEE-D736-4C01-A042-1B42C7D0127B}.Debug|x64.Build.0 = Debug|Any CPU
+		{0726DCEE-D736-4C01-A042-1B42C7D0127B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0726DCEE-D736-4C01-A042-1B42C7D0127B}.Debug|x86.Build.0 = Debug|Any CPU
+		{0726DCEE-D736-4C01-A042-1B42C7D0127B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0726DCEE-D736-4C01-A042-1B42C7D0127B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0726DCEE-D736-4C01-A042-1B42C7D0127B}.Release|x64.ActiveCfg = Release|Any CPU
+		{0726DCEE-D736-4C01-A042-1B42C7D0127B}.Release|x64.Build.0 = Release|Any CPU
+		{0726DCEE-D736-4C01-A042-1B42C7D0127B}.Release|x86.ActiveCfg = Release|Any CPU
+		{0726DCEE-D736-4C01-A042-1B42C7D0127B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
